@@ -1,7 +1,7 @@
 {
-  "name": "simple-react-full-stack",
+  "name": "game-of-three",
   "version": "1.0.0",
-  "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
+  "description": "Game of three ‐ Coding Challenge.",
   "main": "src/server/index.js",
   "scripts": {
     "start": "node src/server/index.js",
@@ -10,7 +10,7 @@
     "server": "nodemon src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Sandeep Raveesh",
+  "author": "Silhoue",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
