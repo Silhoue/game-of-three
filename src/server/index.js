@@ -1,8 +1,19 @@
 const express = require('express');
-const os = require('os');
+const logger = require('./logger');
+
+const PORT = 8080;
 
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+io.on('connection', (socket) => {
+  logger.log(`player ${socket.id} connected`);
+  socket.emit('message', { socketId: socket.id });
+  socket.on('disconnect', () => {
+    logger.log(`player ${socket.id} disconnected`);
+  });
+});
 
 app.use(express.static('dist'));
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
-app.listen(8080, () => console.log('Listening on port 8080!'));
+server.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
