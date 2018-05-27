@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
-import makeMove from './actions';
+import GameStatus from './GameStatus';
+import LastMove from './LastMove';
+import makeMove from '../actions';
 
-import './app.css';
+import '../app.css';
 
 const MOVE_DELAY = 3000;
 const MAX_INITIAL_NUMBER = 500;
@@ -34,45 +36,17 @@ class App extends Component {
     });
   }
 
-  getLastMove() {
-    if (this.props.previousNumber === null) {
-      return this.props.currentNumber || '';
-    }
-
-    const adjustmentValue = this.props.currentNumber * REQUIRED_DIVISOR - this.props.previousNumber;
-    const operationString = adjustmentValue < 0 ? `- ${-adjustmentValue}` : `+ ${adjustmentValue}`;
-
-    return `(${this.props.previousNumber} ${operationString}) / ${REQUIRED_DIVISOR} = ${
-      this.props.currentNumber
-    }`;
-  }
-
   render() {
-    if (this.props.hasTurn === null) {
-      return <h1>Waiting for the second player...</h1>;
-    }
-
-    const lastMove = this.props.currentNumber ? (
-      <span>
-        Last move ({this.props.hasTurn ? 'theirs' : 'yours'}): {this.getLastMove()}
-      </span>
-    ) : (
-      <span>Waiting for the first move</span>
-    );
-
-    if (this.props.isGameOver) {
-      return (
-        <div>
-          {this.props.hasTurn ? <h1>You lost!</h1> : <h1>You won!</h1>}
-          {lastMove}
-        </div>
-      );
-    }
-
     return (
       <div>
-        <h1>{this.props.hasTurn ? "It's your turn" : "It's their turn"}</h1>
-        {lastMove}
+        <h1>Game of Three</h1>
+        <LastMove
+          hasTurn={this.props.hasTurn}
+          currentNumber={this.props.currentNumber}
+          previousNumber={this.props.previousNumber}
+          requiredDivisor={REQUIRED_DIVISOR}
+        />
+        <GameStatus hasTurn={this.props.hasTurn} isGameOver={this.props.isGameOver} />
       </div>
     );
   }
