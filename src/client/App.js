@@ -46,6 +46,19 @@ export default class App extends Component {
     });
   }
 
+  getLastMove() {
+    if (this.state.previousNumber === null) {
+      return this.state.currentNumber || '';
+    }
+
+    const adjustmentValue = this.state.currentNumber * REQUIRED_DIVISOR - this.state.previousNumber;
+    const operationString = adjustmentValue < 0 ? `- ${-adjustmentValue}` : `+ ${adjustmentValue}`;
+
+    return `(${this.state.previousNumber} ${operationString}) / ${REQUIRED_DIVISOR} = ${
+      this.state.currentNumber
+    }`;
+  }
+
   render() {
     if (this.state.hasTurn === null) {
       return <h1>Waiting for the second player...</h1>;
@@ -53,8 +66,7 @@ export default class App extends Component {
 
     const lastMove = this.state.currentNumber ? (
       <span>
-        Last move ({this.state.hasTurn ? 'theirs' : 'yours'}): {this.state.previousNumber} =&gt;{' '}
-        {this.state.currentNumber}
+        Last move ({this.state.hasTurn ? 'theirs' : 'yours'}): {this.getLastMove()}
       </span>
     ) : (
       <span>Waiting for the first move</span>
