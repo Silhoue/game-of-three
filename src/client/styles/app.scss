@@ -3,8 +3,13 @@
 body {
   background-color: $secondary-color;
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
   margin: 15px;
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .app-title {
@@ -21,11 +26,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  max-width: 480px;
+  max-width: 500px;
   padding: 10px;
   margin: auto;
   border: 1px solid $secondary-color;
-  box-shadow: $boxShadow;
+  box-shadow: $box-shadow;
 
   & > * {
     flex-grow: 1;

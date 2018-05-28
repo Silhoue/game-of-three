@@ -10,7 +10,7 @@ function getStatus(hasTurn, isGameOver) {
     return hasTurn ? 'You lost!' : 'You won!';
   }
 
-  return hasTurn ? 'You are thinking...' : 'Your opponent is thinking...';
+  return hasTurn ? "It's your turn!" : 'Waiting for your opponent to move...';
 }
 
 function GameStatus({ hasTurn, isGameOver }) {

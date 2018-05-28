@@ -4,49 +4,55 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import GameStatus from './GameStatus';
 import LastMove from './LastMove';
+import NumberPicker from './NumberPicker';
 import makeMove from '../actions';
-import {
-  MOVE_DELAY,
-  MAX_INITIAL_NUMBER,
-  MIN_INITIAL_NUMBER,
-  REQUIRED_DIVISOR
-} from '../config.json';
+import { MOVE_DELAY, REQUIRED_DIVISOR } from '../config.json';
 import '../styles/app.scss';
 
-function getInitialNumber() {
-  const choicesCount = MAX_INITIAL_NUMBER - MIN_INITIAL_NUMBER + 1;
-  return Math.floor(Math.random() * choicesCount) + MIN_INITIAL_NUMBER;
-}
-
 function getNextNumber(number) {
-  return number === null ? getInitialNumber() : Math.round(number / REQUIRED_DIVISOR);
+  return Math.round(number / REQUIRED_DIVISOR);
 }
 
 class App extends Component {
-  componentDidMount() {
-    const socket = io.connect();
+  constructor(props) {
+    super(props);
+    this.makeMove = this.makeMove.bind(this);
+  }
 
-    socket.on('moved', ({ hasTurn, currentNumber, isGameOver }) => {
+  componentDidMount() {
+    this.socket = io.connect();
+
+    this.socket.on('moved', ({ hasTurn, currentNumber, isGameOver }) => {
       this.props.dispatchMakeMove(hasTurn, currentNumber, isGameOver);
-      if (hasTurn && !isGameOver) {
+      if (hasTurn && currentNumber && !isGameOver) {
         window.setTimeout(() => {
-          socket.emit('moving', { currentNumber: getNextNumber(currentNumber) });
+          this.makeMove(getNextNumber(currentNumber));
         }, MOVE_DELAY);
       }
     });
   }
 
+  makeMove(newNumber) {
+    this.socket.emit('moving', { currentNumber: newNumber });
+  }
+
   render() {
+    const {
+      hasTurn, currentNumber, previousNumber, isGameOver
+    } = this.props;
     return (
       <div className="app">
         <h1 className="app-title">Game of Three</h1>
         <div className="app-content">
           <LastMove
-            hasTurn={this.props.hasTurn}
-            currentNumber={this.props.currentNumber}
-            previousNumber={this.props.previousNumber}
+            hasTurn={hasTurn}
+            currentNumber={currentNumber}
+            previousNumber={previousNumber}
           />
-          <GameStatus hasTurn={this.props.hasTurn} isGameOver={this.props.isGameOver} />
+          <div>
+            <GameStatus hasTurn={hasTurn} isGameOver={isGameOver} />
+            {hasTurn && !currentNumber ? <NumberPicker makeMove={this.makeMove} /> : null}
+          </div>
         </div>
       </div>
     );

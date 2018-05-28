@@ -1,7 +1,5 @@
 @import "shared";
 
-$resultDiameter: 75px;
-
 .lastMove-content {
   display: flex;
   justify-content: center;
@@ -14,11 +12,13 @@ $resultDiameter: 75px;
 }
 
 .lastMove-result {
+  $result-diameter: 75px;
+
   color: #fff;
   background-color: $primary-color;
   font-size: 26px;
-  line-height: $resultDiameter;
-  width: $resultDiameter;
+  line-height: $result-diameter;
+  width: $result-diameter;
   border-radius: 100%;
-  box-shadow: $boxShadow;
+  box-shadow: $box-shadow;
 }
