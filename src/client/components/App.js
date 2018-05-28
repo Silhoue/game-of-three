@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   makeMove(newNumber) {
-    this.socket.emit('moving', { currentNumber: newNumber });
+    this.socket.emit('moving', { newNumber });
   }
 
   render() {

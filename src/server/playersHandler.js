@@ -7,16 +7,26 @@ function introducePlayers(firstPlayer, secondPlayer) {
   logger.log(`introducing player ${firstPlayer.id} to player ${secondPlayer.id}`);
 
   let hasFirstPlayerTurn = true;
-  function makeMove({ currentNumber }) {
-    const isGameOver = currentNumber === WINNING_NUMBER;
-    firstPlayer.emit('moved', { hasTurn: hasFirstPlayerTurn, currentNumber, isGameOver });
-    secondPlayer.emit('moved', { hasTurn: !hasFirstPlayerTurn, currentNumber, isGameOver });
+  function makeMove({ newNumber }) {
+    const isGameOver = newNumber === WINNING_NUMBER;
+
+    firstPlayer.emit('moved', {
+      hasTurn: hasFirstPlayerTurn,
+      currentNumber: newNumber,
+      isGameOver
+    });
+    secondPlayer.emit('moved', {
+      hasTurn: !hasFirstPlayerTurn,
+      currentNumber: newNumber,
+      isGameOver
+    });
+
     hasFirstPlayerTurn = !hasFirstPlayerTurn;
   }
 
   firstPlayer.on('moving', makeMove);
   secondPlayer.on('moving', makeMove);
-  makeMove({ currentNumber: null });
+  makeMove({ newNumber: null });
 }
 
 function welcomePlayer(newPlayer) {
