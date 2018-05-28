@@ -5,13 +5,13 @@ import io from 'socket.io-client';
 import GameStatus from './GameStatus';
 import LastMove from './LastMove';
 import makeMove from '../actions';
-
+import {
+  MOVE_DELAY,
+  MAX_INITIAL_NUMBER,
+  MIN_INITIAL_NUMBER,
+  REQUIRED_DIVISOR
+} from '../config.json';
 import '../styles/app.scss';
-
-const MOVE_DELAY = 3000;
-const MAX_INITIAL_NUMBER = 9999;
-const MIN_INITIAL_NUMBER = 10;
-const REQUIRED_DIVISOR = 3;
 
 function getInitialNumber() {
   const choicesCount = MAX_INITIAL_NUMBER - MIN_INITIAL_NUMBER + 1;
@@ -45,7 +45,6 @@ class App extends Component {
             hasTurn={this.props.hasTurn}
             currentNumber={this.props.currentNumber}
             previousNumber={this.props.previousNumber}
-            requiredDivisor={REQUIRED_DIVISOR}
           />
           <GameStatus hasTurn={this.props.hasTurn} isGameOver={this.props.isGameOver} />
         </div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { REQUIRED_DIVISOR } from '../config.json';
 import '../styles/moveEquation.scss';
 
-function MoveEquation({ currentNumber, previousNumber, requiredDivisor }) {
+function MoveEquation({ currentNumber, previousNumber }) {
   if (!previousNumber) {
     return null;
   }
 
-  const adjustmentValue = currentNumber * requiredDivisor - previousNumber;
+  const adjustmentValue = currentNumber * REQUIRED_DIVISOR - previousNumber;
   const operator = adjustmentValue < 0 ? '-' : '+';
 
   return (
@@ -20,7 +20,7 @@ function MoveEquation({ currentNumber, previousNumber, requiredDivisor }) {
           <span className="moveEquation-fractionTopParenthesis">)</span>
         </span>
         <span className="moveEquation-fractionSlash"> / </span>
-        <span>{requiredDivisor}</span>
+        <span>{REQUIRED_DIVISOR}</span>
       </span>
       <span className="moveEquation-equals"> = </span>
     </span>
@@ -29,8 +29,7 @@ function MoveEquation({ currentNumber, previousNumber, requiredDivisor }) {
 
 MoveEquation.propTypes = {
   currentNumber: PropTypes.number,
-  previousNumber: PropTypes.number,
-  requiredDivisor: PropTypes.number.isRequired
+  previousNumber: PropTypes.number
 };
 
 MoveEquation.defaultProps = {

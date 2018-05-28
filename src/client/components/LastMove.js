@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MoveEquation from './MoveEquation';
-
 import '../styles/lastMove.scss';
 
-function LastMove({
-  hasTurn, currentNumber, previousNumber, requiredDivisor
-}) {
+function LastMove({ hasTurn, currentNumber, previousNumber }) {
   if (hasTurn === null) {
     return null;
   }
@@ -17,11 +14,7 @@ function LastMove({
         <h2 className="lastMove-title">{hasTurn ? 'Their' : 'Your'} move:</h2>
       ) : null}
       <div className="lastMove-content">
-        <MoveEquation
-          currentNumber={currentNumber}
-          previousNumber={previousNumber}
-          requiredDivisor={requiredDivisor}
-        />
+        <MoveEquation currentNumber={currentNumber} previousNumber={previousNumber} />
         <span className="lastMove-result">{currentNumber || '?'}</span>
       </div>
     </div>
@@ -31,8 +24,7 @@ function LastMove({
 LastMove.propTypes = {
   hasTurn: PropTypes.bool,
   currentNumber: PropTypes.number,
-  previousNumber: PropTypes.number,
-  requiredDivisor: PropTypes.number.isRequired
+  previousNumber: PropTypes.number
 };
 
 LastMove.defaultProps = {
