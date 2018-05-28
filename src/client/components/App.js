@@ -6,12 +6,7 @@ import GameStatus from './GameStatus';
 import LastMove from './LastMove';
 import NumberPicker from './NumberPicker';
 import makeMove from '../actions';
-import { MOVE_DELAY, REQUIRED_DIVISOR } from '../config.json';
 import '../styles/app.scss';
-
-function getNextNumber(number) {
-  return Math.round(number / REQUIRED_DIVISOR);
-}
 
 class App extends Component {
   constructor(props) {
@@ -21,15 +16,7 @@ class App extends Component {
 
   componentDidMount() {
     this.socket = io.connect();
-
-    this.socket.on('moved', ({ hasTurn, currentNumber, isGameOver }) => {
-      this.props.dispatchMakeMove(hasTurn, currentNumber, isGameOver);
-      if (hasTurn && currentNumber && !isGameOver) {
-        window.setTimeout(() => {
-          this.makeMove(getNextNumber(currentNumber));
-        }, MOVE_DELAY);
-      }
-    });
+    this.socket.on('moved', this.props.dispatchMakeMove);
   }
 
   makeMove(newNumber) {
@@ -51,7 +38,10 @@ class App extends Component {
           />
           <div>
             <GameStatus hasTurn={hasTurn} isGameOver={isGameOver} />
-            {hasTurn && !currentNumber ? <NumberPicker makeMove={this.makeMove} /> : null}
+            {hasTurn &&
+              !isGameOver && (
+                <NumberPicker currentNumber={currentNumber} makeMove={this.makeMove} />
+              )}
           </div>
         </div>
       </div>
@@ -76,7 +66,7 @@ App.defaultProps = {
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
-  dispatchMakeMove: (...args) => dispatch(makeMove(...args))
+  dispatchMakeMove: data => dispatch(makeMove(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

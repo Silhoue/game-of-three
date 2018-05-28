@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MAX_INITIAL_NUMBER, MIN_INITIAL_NUMBER } from '../config.json';
+import {
+  MOVE_DELAY,
+  MAX_INITIAL_NUMBER,
+  MIN_INITIAL_NUMBER,
+  REQUIRED_DIVISOR
+} from '../config.json';
 import '../styles/numberPicker.scss';
 
 function getInitialNumber() {
   const choicesCount = MAX_INITIAL_NUMBER - MIN_INITIAL_NUMBER + 1;
   return Math.floor(Math.random() * choicesCount) + MIN_INITIAL_NUMBER;
+}
+
+function getNextNumber(number) {
+  return Math.round(number / REQUIRED_DIVISOR);
 }
 
 class NumberPicker extends Component {
@@ -17,6 +26,15 @@ class NumberPicker extends Component {
     };
     this.onNumberChange = this.onNumberChange.bind(this);
     this.onNumberSubmit = this.onNumberSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const { currentNumber, makeMove } = this.props;
+    if (this.props.currentNumber) {
+      window.setTimeout(() => {
+        makeMove(getNextNumber(currentNumber));
+      }, MOVE_DELAY);
+    }
   }
 
   onNumberChange(e) {
@@ -45,6 +63,10 @@ class NumberPicker extends Component {
   }
 
   render() {
+    if (this.props.currentNumber) {
+      return <p>Generating the number...</p>;
+    }
+
     return (
       <div>
         <p className="numberPicker-description">
@@ -75,7 +97,12 @@ class NumberPicker extends Component {
 }
 
 NumberPicker.propTypes = {
+  currentNumber: PropTypes.number,
   makeMove: PropTypes.func.isRequired
+};
+
+NumberPicker.defaultProps = {
+  currentNumber: null
 };
 
 export default NumberPicker;
