@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import { REQUIRED_DIVISOR } from '../config.json';
 import '../styles/moveEquation.scss';
 
+function getAdjustmentValue(previousNumber, currentNumber) {
+  return currentNumber * REQUIRED_DIVISOR - previousNumber;
+}
+
 function MoveEquation({ currentNumber, previousNumber }) {
   if (!previousNumber) {
     return null;
   }
 
-  const adjustmentValue = currentNumber * REQUIRED_DIVISOR - previousNumber;
+  const adjustmentValue = getAdjustmentValue(previousNumber, currentNumber);
   const operator = adjustmentValue < 0 ? '-' : '+';
 
   return (
