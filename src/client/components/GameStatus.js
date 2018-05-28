@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function getStatus(hasTurn, isGameOver) {
   if (hasTurn === null) {
-    return 'Waiting for the second player...';
+    return 'Waiting for the second player to join...';
   }
 
   if (isGameOver) {
@@ -13,17 +13,17 @@ function getStatus(hasTurn, isGameOver) {
   return hasTurn ? 'You are thinking...' : 'Your opponent is thinking...';
 }
 
-function Status({ hasTurn, isGameOver }) {
+function GameStatus({ hasTurn, isGameOver }) {
   return <p>{getStatus(hasTurn, isGameOver)}</p>;
 }
 
-Status.propTypes = {
+GameStatus.propTypes = {
   hasTurn: PropTypes.bool,
   isGameOver: PropTypes.bool.isRequired
 };
 
-Status.defaultProps = {
+GameStatus.defaultProps = {
   hasTurn: null
 };
 
-export default Status;
+export default GameStatus;

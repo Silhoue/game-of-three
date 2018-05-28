@@ -1,25 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function getLastMove(previousNumber, currentNumber, requiredDivisor) {
-  const adjustmentValue = currentNumber * requiredDivisor - previousNumber;
-  const operationString = adjustmentValue < 0 ? `- ${-adjustmentValue}` : `+ ${adjustmentValue}`;
+import '../styles/lastMove.scss';
 
-  return `(${previousNumber} ${operationString}) / ${REQUIRED_DIVISOR} = ${currentNumber}`;
+function getLastMove(previousNumber, currentNumber, requiredDivisor) {
+  if (!previousNumber) {
+    return null;
+  }
+
+  const adjustmentValue = currentNumber * requiredDivisor - previousNumber;
+  const operator = adjustmentValue < 0 ? '-' : '+';
+
+  return (
+    <span className="lastMove-equation">
+      <span className="lastMove-equationFraction">
+        <span className="lastMove-equationFractionTop">
+          <span className="lastMove-equationFractionTopParenthesis">(</span>
+          {previousNumber} {operator} {Math.abs(adjustmentValue)}
+          <span className="lastMove-equationFractionTopParenthesis">)</span>
+        </span>
+        <span className="lastMove-equationFractionSlash"> / </span>
+        <span>{requiredDivisor}</span>
+      </span>
+      <span className="lastMove-equationEquals"> = </span>
+    </span>
+  );
 }
 
 function LastMove({
   hasTurn, previousNumber, currentNumber, requiredDivisor
 }) {
-  if (currentNumber) {
-    return (
-      <span>
-        Last move ({hasTurn ? 'theirs' : 'yours'}):{' '}
-        {previousNumber ? getLastMove(previousNumber, currentNumber, requiredDivisor) : currentNumber}
-      </span>
-    );
+  if (hasTurn === null) {
+    return null;
   }
-  return <span>Waiting for the first move</span>;
+
+  return (
+    <div>
+      {currentNumber ? (
+        <h2 className="lastMove-title">{hasTurn ? 'Their' : 'Your'} move:</h2>
+      ) : null}
+      <div className="lastMove-content">
+        {getLastMove(previousNumber, currentNumber, requiredDivisor)}
+        <span className="lastMove-result">{currentNumber || '?'}</span>
+      </div>
+    </div>
+  );
 }
 
 LastMove.propTypes = {

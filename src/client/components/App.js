@@ -6,10 +6,10 @@ import GameStatus from './GameStatus';
 import LastMove from './LastMove';
 import makeMove from '../actions';
 
-import '../app.css';
+import '../styles/app.scss';
 
 const MOVE_DELAY = 3000;
-const MAX_INITIAL_NUMBER = 500;
+const MAX_INITIAL_NUMBER = 9999;
 const MIN_INITIAL_NUMBER = 10;
 const REQUIRED_DIVISOR = 3;
 
@@ -38,15 +38,17 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Game of Three</h1>
-        <LastMove
-          hasTurn={this.props.hasTurn}
-          currentNumber={this.props.currentNumber}
-          previousNumber={this.props.previousNumber}
-          requiredDivisor={REQUIRED_DIVISOR}
-        />
-        <GameStatus hasTurn={this.props.hasTurn} isGameOver={this.props.isGameOver} />
+      <div className="app">
+        <h1 className="app-title">Game of Three</h1>
+        <div className="app-content">
+          <LastMove
+            hasTurn={this.props.hasTurn}
+            currentNumber={this.props.currentNumber}
+            previousNumber={this.props.previousNumber}
+            requiredDivisor={REQUIRED_DIVISOR}
+          />
+          <GameStatus hasTurn={this.props.hasTurn} isGameOver={this.props.isGameOver} />
+        </div>
       </div>
     );
   }

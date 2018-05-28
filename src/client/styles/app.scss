@@ -1,0 +1,35 @@
+@import "shared";
+
+body {
+  background-color: $secondary-color;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  margin: 15px;
+}
+
+.app-title {
+  color: $primary-color;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.app-content {
+  color: $text-color;
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 480px;
+  padding: 10px;
+  margin: auto;
+  border: 1px solid $secondary-color;
+  box-shadow: $boxShadow;
+
+  & > * {
+    flex-grow: 1;
+    width: 175px;
+    margin: 5px;
+  }
+}
