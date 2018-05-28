@@ -1,5 +1,7 @@
 @import "shared";
 
+$resultDiameter: 75px;
+
 .lastMove-content {
   display: flex;
   justify-content: center;
@@ -11,30 +13,6 @@
   margin: 0 0 10px;
 }
 
-.lastMove-equation {
-  display: flex;
-  align-items: center;
-}
-
-.lastMove-equationFraction {
-  display: flex;
-  flex-direction: column;
-}
-
-.lastMove-equationFractionTop {
-  border-bottom: 1px solid $text-color;
-}
-
-.lastMove-equationFractionTopParenthesis,
-.lastMove-equationFractionSlash {
-  display: none;
-}
-
-.lastMove-equationEquals {
-  margin: 0 10px;
-}
-
-$resultDiameter: 75px;
 .lastMove-result {
   color: #fff;
   background-color: $primary-color;

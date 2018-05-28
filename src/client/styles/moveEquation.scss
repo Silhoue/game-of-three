@@ -1,0 +1,24 @@
+@import "shared";
+
+.moveEquation {
+  display: flex;
+  align-items: center;
+}
+
+.moveEquation-fraction {
+  display: flex;
+  flex-direction: column;
+}
+
+.moveEquation-fractionTop {
+  border-bottom: 1px solid $text-color;
+}
+
+.moveEquation-fractionTopParenthesis,
+.moveEquation-fractionSlash {
+  display: none;
+}
+
+.moveEquation-equals {
+  margin: 0 10px;
+}
