@@ -4,7 +4,7 @@ A simple browser game with two players communicating through a server applicatio
 
 ## Stack
 
-Node.js, Express, Socket.io; React, Redux; Nodemon, Webpack, Babel, Sass
+Node.js, Express, Socket.io; React, Redux; Mocha, Chai; Nodemon, Webpack, Babel, Sass
 
 Built with [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack) boilerplate.
 
@@ -22,6 +22,9 @@ npm install
 
 # Start development server
 npm run dev
+
+# Run tests
+npm test
 
 # Build for production
 npm run build

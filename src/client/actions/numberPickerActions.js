@@ -1,19 +1,19 @@
-export function updateNumber(number) {
+export function updateNumber(newNumber) {
   return {
     type: 'UPDATE_NUMBER',
-    number
+    newNumber
   };
 }
 
-export function submitSuccess() {
+export function setError(errorMessage) {
   return {
-    type: 'SUBMIT_SUCCESS'
-  };
-}
-
-export function submitFailure(errorMessage) {
-  return {
-    type: 'SUBMIT_FAILURE',
+    type: 'SET_ERROR',
     errorMessage
+  };
+}
+
+export function unsetError() {
+  return {
+    type: 'UNSET_ERROR'
   };
 }
