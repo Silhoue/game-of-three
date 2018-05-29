@@ -7,6 +7,7 @@ function introducePlayers(firstPlayer, secondPlayer) {
   logger.log(`introducing player ${firstPlayer.id} to player ${secondPlayer.id}`);
 
   let hasFirstPlayerTurn = true;
+
   function makeMove({ newNumber }) {
     const isGameOver = newNumber === WINNING_NUMBER;
 
@@ -21,7 +22,12 @@ function introducePlayers(firstPlayer, secondPlayer) {
       isGameOver
     });
 
-    hasFirstPlayerTurn = !hasFirstPlayerTurn;
+    if (isGameOver) {
+      firstPlayer.disconnect(true);
+      secondPlayer.disconnect(true);
+    } else {
+      hasFirstPlayerTurn = !hasFirstPlayerTurn;
+    }
   }
 
   firstPlayer.on('moving', makeMove);

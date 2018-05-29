@@ -19,6 +19,12 @@ class App extends Component {
     this.socket.on('moved', this.props.dispatchMakeMove);
   }
 
+  componentDidUpdate() {
+    if (this.props.isGameOver) {
+      this.socket.close();
+    }
+  }
+
   handleMoveSubmit(newNumber) {
     this.socket.emit('moving', { newNumber });
   }
