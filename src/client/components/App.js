@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import GameStatus from './GameStatus';
 import LastMove from './LastMove';
-import NumberPicker from './NumberPicker';
+import MovePicker from './MovePicker';
 import makeMove from '../actions';
 import '../styles/app.scss';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.makeMove = this.makeMove.bind(this);
+    this.handleMoveSubmit = this.handleMoveSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -19,7 +19,7 @@ class App extends Component {
     this.socket.on('moved', this.props.dispatchMakeMove);
   }
 
-  makeMove(newNumber) {
+  handleMoveSubmit(newNumber) {
     this.socket.emit('moving', { newNumber });
   }
 
@@ -40,7 +40,10 @@ class App extends Component {
             <GameStatus hasTurn={hasTurn} isGameOver={isGameOver} />
             {hasTurn &&
               !isGameOver && (
-                <NumberPicker currentNumber={currentNumber} makeMove={this.makeMove} />
+                <MovePicker
+                  currentNumber={currentNumber}
+                  handleMoveSubmit={this.handleMoveSubmit}
+                />
               )}
           </div>
         </div>
