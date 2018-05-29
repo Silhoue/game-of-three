@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import GameStatus from './GameStatus';
 import LastMove from './LastMove';
 import MovePicker from './MovePicker';
-import makeMove from '../actions';
+import makeMove from '../actions/gameActions';
 import '../styles/app.scss';
 
 class App extends Component {
@@ -72,7 +72,7 @@ App.defaultProps = {
   previousNumber: null
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.game;
 
 const mapDispatchToProps = dispatch => ({
   dispatchMakeMove: data => dispatch(makeMove(data))

@@ -5,14 +5,17 @@ const initialState = {
   isGameOver: false
 };
 
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
+export default function gameReducer(state = initialState, action) {
+  const {
+    type, hasTurn, currentNumber, isGameOver
+  } = action;
+  switch (type) {
     case 'MAKE_MOVE':
       return {
-        hasTurn: action.hasTurn,
-        currentNumber: action.currentNumber,
+        hasTurn,
+        currentNumber,
         previousNumber: state.currentNumber,
-        isGameOver: action.isGameOver
+        isGameOver
       };
     default:
       return state;

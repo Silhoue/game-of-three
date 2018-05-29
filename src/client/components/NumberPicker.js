@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { MAX_INITIAL_NUMBER, MIN_INITIAL_NUMBER } from '../config.json';
+import { updateNumber, submitSuccess, submitFailure } from '../actions/numberPickerActions';
 import '../styles/numberPicker.scss';
-
-function getInitialNumber() {
-  const choicesCount = MAX_INITIAL_NUMBER - MIN_INITIAL_NUMBER + 1;
-  return Math.floor(Math.random() * choicesCount) + MIN_INITIAL_NUMBER;
-}
 
 class NumberPicker extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      newNumber: getInitialNumber(),
-      errorMessage: ''
-    };
     this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleNumberSubmit = this.handleNumberSubmit.bind(this);
   }
@@ -22,25 +15,27 @@ class NumberPicker extends Component {
   handleNumberChange(e) {
     const input = e.target;
     if (input.validity.valid) {
-      this.setState({ newNumber: input.value });
+      this.props.dispatchUpdateNumber(parseInt(input.value, 10));
     }
   }
 
   handleNumberSubmit(e) {
-    const { newNumber } = this.state;
+    const {
+      newNumber,
+      dispatchSubmitFailure,
+      dispatchSubmitSuccess,
+      handleMoveSubmit
+    } = this.props;
 
-    let errorMessage = '';
     if (newNumber === '') {
-      errorMessage = 'Provide a number';
+      dispatchSubmitFailure('Provide a number');
     } else if (newNumber > MAX_INITIAL_NUMBER) {
-      errorMessage = `${newNumber} is too big`;
+      dispatchSubmitFailure(`${newNumber} is too big`);
     } else if (newNumber < MIN_INITIAL_NUMBER) {
-      errorMessage = `${newNumber} is too small`;
-    }
-
-    this.setState({ errorMessage });
-    if (!errorMessage) {
-      this.props.handleMoveSubmit(parseInt(newNumber, 10));
+      dispatchSubmitFailure(`${newNumber} is too small`);
+    } else {
+      dispatchSubmitSuccess();
+      handleMoveSubmit(newNumber);
     }
 
     e.preventDefault();
@@ -60,13 +55,13 @@ class NumberPicker extends Component {
               inputMode="numeric"
               maxLength={MAX_INITIAL_NUMBER.toString().length}
               className="numberPicker-value"
-              value={this.state.newNumber}
+              value={this.props.newNumber}
               onChange={this.handleNumberChange}
             />
             <button className="numberPicker-submit">Start</button>
           </div>
-          {this.state.errorMessage && (
-            <p className="numberPicker-errorMessage">{this.state.errorMessage}</p>
+          {this.props.errorMessage && (
+            <p className="numberPicker-errorMessage">{this.props.errorMessage}</p>
           )}
         </form>
       </div>
@@ -75,7 +70,20 @@ class NumberPicker extends Component {
 }
 
 NumberPicker.propTypes = {
-  handleMoveSubmit: PropTypes.func.isRequired
+  newNumber: PropTypes.number.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  handleMoveSubmit: PropTypes.func.isRequired,
+  dispatchUpdateNumber: PropTypes.func.isRequired,
+  dispatchSubmitSuccess: PropTypes.func.isRequired,
+  dispatchSubmitFailure: PropTypes.func.isRequired
 };
 
-export default NumberPicker;
+const mapStateToProps = state => state.numberPicker;
+
+const mapDispatchToProps = dispatch => ({
+  dispatchUpdateNumber: number => dispatch(updateNumber(number)),
+  dispatchSubmitSuccess: () => dispatch(submitSuccess()),
+  dispatchSubmitFailure: errorMessage => dispatch(submitFailure(errorMessage))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NumberPicker);
