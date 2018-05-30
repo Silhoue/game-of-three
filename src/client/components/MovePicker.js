@@ -11,7 +11,7 @@ class MovePicker extends Component {
   componentDidMount() {
     const { currentNumber, handleMoveSubmit } = this.props;
     if (this.props.currentNumber) {
-      window.setTimeout(() => {
+      setTimeout(() => {
         handleMoveSubmit(getNextNumber(currentNumber));
       }, MOVE_DELAY);
     }

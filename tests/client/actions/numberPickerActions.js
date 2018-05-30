@@ -1,5 +1,9 @@
 import { expect } from 'chai';
-import { updateNumber, setError, unsetError } from '../../src/client/actions/numberPickerActions';
+import {
+  updateNumber,
+  setError,
+  unsetError
+} from '../../../src/client/actions/numberPickerActions';
 
 describe('number picker actions', () => {
   it('create an action to update the number string', () => {

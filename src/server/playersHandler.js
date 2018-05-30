@@ -50,4 +50,4 @@ function welcomePlayer(newPlayer) {
   });
 }
 
-module.exports = { welcomePlayer, introducePlayers };
+module.exports = { welcomePlayer };

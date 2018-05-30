@@ -4,7 +4,7 @@ A simple browser game with two players communicating through a server applicatio
 
 ## Stack
 
-Node.js, Express, Socket.io; React, Redux; Mocha, Chai; Nodemon, Webpack, Babel, Sass
+React, Redux; Node.js, Express, Socket.io; Mocha, Enzyme, Sinon, Chai; Nodemon, Webpack, Babel, Sass
 
 Built with [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack) boilerplate.
 
@@ -20,11 +20,11 @@ cd game-of-three
 # Install dependencies
 npm install
 
-# Start development server
-npm run dev
-
 # Run tests
 npm test
+
+# Start development server
+npm run dev
 
 # Build for production
 npm run build
@@ -35,12 +35,8 @@ npm start
 
 ## Improvement ideas
 
-Server
-
-* handle "cheating" players (making move outside of their turn, sending wrong number)
-* handle players disconnecting before the end of the game (quit button, close/refresh window)
-
-Client
-
-* add "play again" option
-* display full move history
+* [Server] handle "cheating" players (making move outside of their turn, sending wrong number)
+* [Server] handle players disconnecting before the end of the game (quit button, close/refresh window)
+* [Client] add "play again" option
+* [Client] display full move history
+* measure & increase test coverage
